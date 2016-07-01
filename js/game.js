@@ -11,7 +11,11 @@ var leftPressed=false;  // Whether left control button is pressed
 var ballRadius=10;
 var brickRowCount=7;
 var brickColumnCount=5;
-var count=brickRowCount*brickColumnCount;
+
+var count=parseInt(brickRowCount)*parseInt(brickColumnCount);
+
+var score = 0;
+
 var brickWidth=80;
 var brickHeight=20;
 var brickPadding=10;
@@ -39,8 +43,8 @@ for(c=0;c<brickColumnCount;++c){
 
 }
 
-var dx=2;
-var dy=-2;
+var dx=2.5;
+var dy=-2.5;
 
 function drawBall(){
 
@@ -84,6 +88,147 @@ function drawBricks(){
   }
 
 }
+function collisionDetection(){
+
+  for(c=0;c<brickColumnCount;++c){
+
+    for(r=0;r<brickRowCount;++r){
+
+       var b=bricks[c][r];
+
+       if(b.status==1){
+
+          if(x>b.x && x<b.x+brickWidth && y>b.y && y<b.y+brickHeight){
+             dy=-dy;
+             b.status=0;
+             score++;
+             count--;
+             /*** Change color of ball when it hits a brick ****/
+             ctx.beginPath();
+             ctx.arc(x,y,ballRadius,0,Math.PI*2);
+             ctx.fillStyle="#FFD700";
+             ctx.fillStroke="#FFD700";
+             ctx.stroke="10";
+             ctx.fill();
+             ctx.closePath();
+             /**************************************************/
+             /*** If count of total bricks decreases to 30
+                  Increase the speed of ball ***/
+                  if(count<=30 && speedup1==0){
+                     dy+=0.5;
+                     dx+=0.5;
+                     paddleWidth+=4;
+                     speedup1=1;
+                  }
+             /*** If count of total bricks decreases to 20
+                  Increase the speed of ball and increase paddleWidth***/
+                  if(count<=25 && speedup2==0){
+                     dy+=0.5;
+                     dx+=0.5;
+                     paddleWidth+=4;
+                     speedup2=1;
+                  }
+             /*** If count of total bricks decreases to 10
+                  Increase the speed of ball ******/
+                  if(count<=20 && speedup3==0){
+                     if(dy<0)
+                       dy-=0.5;
+                     else
+                       dy+=0.5;
+                     if(dx<0)
+                       dx-=0.5;
+                     else
+                       dx+=0.5;
+
+                     paddleWidth+=4;
+                     speedup3=1;
+                  }
+
+                  if(count<=15 && speedup4==0){
+
+                    if(dy<0)
+                      dy-=0.5;
+                    else
+                      dy+=0.5;
+                    if(dx<0)
+                      dx-=0.5;
+                    else
+                      dx+=0.5;
+                     paddleWidth+=5;
+                     speedup4=1;
+
+                  }
+
+                  if(count<=10 && speedup5==0){
+
+                     if(dy<0)
+                       dy-=0.5;
+                     else
+                      dy+=0.5;
+                     if(dx<0)
+                       dx-=0.5;
+                     else
+                      dx+=0.5;
+                     paddleWidth+=6;
+                     speedup5=1;
+
+                  }
+
+                  if(count<=5 && speedup6==0){
+
+                    if(dy<0)
+                      dy-=0.5;
+                    else
+                      dy+=0.5;
+                    if(dx<0)
+                      dx-=0.5;
+                    else
+                      dx+=0.5;
+                     paddleWidth+=6;
+                     speedup6=1;
+
+                  }
+
+                  if(count<=5 && speedup7==0){
+
+                    if(dy<0)
+                      dy-=0.5;
+                    else
+                      dy+=0.5;
+                    if(dx<0)
+                      dx-=0.5;
+                    else
+                      dx+=0.5;
+                     paddleWidth+=6;
+                     speedup7=1;
+
+                  }
+
+                  if(count<=0){
+
+                     alert("You are awesome!!");
+                     document.location.reload();
+                  }
+
+
+          }
+
+      }
+
+    }
+
+  }
+
+}
+
+function drawScore(){
+
+   ctx.font="16px Arial";
+   ctx.fillStyle="#0095DD";
+   ctx.fillText("Score: "+score,8,20);
+   console.log(parseInt(brickRowCount)*parseInt(brickColumnCount)-parseInt(count));
+
+}
 
 function draw(){
 
@@ -91,6 +236,7 @@ function draw(){
     drawBricks();
     drawBall();
     drawPaddle();
+    drawScore();
 
     collisionDetection();
 
@@ -123,141 +269,6 @@ function draw(){
 
 }
 
-function collisionDetection(){
-
-  for(c=0;c<brickColumnCount;++c){
-
-    for(r=0;r<brickRowCount;++r){
-
-       var b=bricks[c][r];
-
-       if(b.status==1){
-
-          if(x>b.x && x<b.x+brickWidth && y>b.y && y<b.y+brickHeight){
-             dy=-dy;
-             b.status=0;
-             count--;
-             /*** Change color of ball when it hits a brick ****/
-             ctx.beginPath();
-             ctx.arc(x,y,ballRadius,0,Math.PI*2);
-             ctx.fillStyle="#FFD700";
-             ctx.fillStroke="#FFD700";
-             ctx.stroke="10";
-             ctx.fill();
-             ctx.closePath();
-             /**************************************************/
-             /*** If count of total bricks decreases to 30
-                  Increase the speed of ball ***/
-                  if(count<=30 && speedup1==0){
-                     dy+=0.5;
-                     dx+=0.5;
-                     paddleWidth+=3;
-                     speedup1=1;
-                  }
-             /*** If count of total bricks decreases to 20
-                  Increase the speed of ball and increase paddleWidth***/
-                  if(count<=25 && speedup2==0){
-                     dy+=0.5;
-                     dx+=0.5;
-                     paddleWidth+=3;
-                     speedup2=1;
-                  }
-             /*** If count of total bricks decreases to 10
-                  Increase the speed of ball ******/
-                  if(count<=20 && speedup3==0){
-                     if(dy<0)
-                       dy-=0.5;
-                     else
-                       dy+=0.5;
-                     if(dx<0)
-                       dx-=0.5;
-                     else
-                       dx+=0.5;
-
-                     paddleWidth+=3;
-                     speedup3=1;
-                  }
-
-                  if(count<=15 && speedup4==0){
-
-                    if(dy<0)
-                      dy-=0.5;
-                    else
-                      dy+=0.5;
-                    if(dx<0)
-                      dx-=0.5;
-                    else
-                      dx+=0.5;
-                     paddleWidth+=3;
-                     speedup4=1;
-
-                  }
-
-                  if(count<=10 && speedup5==0){
-
-                     if(dy<0)
-                       dy-=0.5;
-                     else
-                      dy+=0.5;
-                     if(dx<0)
-                       dx-=0.5;
-                     else
-                      dx+=0.5;
-                     paddleWidth+=3;
-                     speedup5=1;
-
-                  }
-
-                  if(count<=5 && speedup6==0){
-
-                    if(dy<0)
-                      dy-=0.5;
-                    else
-                      dy+=0.5;
-                    if(dx<0)
-                      dx-=0.5;
-                    else
-                      dx+=0.5;
-                     paddleWidth+=3;
-                     speedup6=1;
-
-                  }
-
-                  if(count<=5 && speedup7==0){
-
-                    if(dy<0)
-                      dy-=0.5;
-                    else
-                      dy+=0.5;
-                    if(dx<0)
-                      dx-=0.5;
-                    else
-                      dx+=0.5;
-                     paddleWidth+=3;
-                     speedup7=1;
-
-                  }
-
-                  if(count<=0){
-
-                     alert("You are a fucking winner!!");
-                     document.location.reload();
-                  }
-
-
-          }
-
-      }
-
-    }
-
-  }
-
-}
-
-document.addEventListener("keydown",keyDownHandler,false);
-document.addEventListener("keyup",keyUpHandler,false);
-
 function keyDownHandler(e){
 
   if(e.keyCode==39)
@@ -276,6 +287,26 @@ function keyUpHandler(e){
      leftPressed=false;
 
 }
+
+function mouseMoveHandler(e){
+
+  var relativeX=e.clientX-canvas.offsetLeft;
+
+  if(relativeX>0 && relativeX<canvas.width){
+
+    paddleX=relativeX-paddleWidth/2;
+
+  }
+
+
+}
+
+document.addEventListener("keydown",keyDownHandler,false);
+document.addEventListener("keyup",keyUpHandler,false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+
+
 
 
 setInterval(draw,10);  // Run this every 10 millisecond
