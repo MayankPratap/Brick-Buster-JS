@@ -15,6 +15,7 @@ var brickColumnCount=5;
 var count=parseInt(brickRowCount)*parseInt(brickColumnCount);
 
 var score = 0;
+var lives = 3;  // How many lives player has to complete the game
 
 var brickWidth=80;
 var brickHeight=20;
@@ -43,8 +44,8 @@ for(c=0;c<brickColumnCount;++c){
 
 }
 
-var dx=2.5;
-var dy=-2.5;
+var dx=3.5;
+var dy=-3.5;
 
 function drawBall(){
 
@@ -115,16 +116,16 @@ function collisionDetection(){
              /*** If count of total bricks decreases to 30
                   Increase the speed of ball ***/
                   if(count<=30 && speedup1==0){
-                     dy+=0.5;
-                     dx+=0.5;
+                     dy+=1;
+                     dx+=1;
                      paddleWidth+=4;
                      speedup1=1;
                   }
              /*** If count of total bricks decreases to 20
                   Increase the speed of ball and increase paddleWidth***/
                   if(count<=25 && speedup2==0){
-                     dy+=0.5;
-                     dx+=0.5;
+                     dy+=1;
+                     dx+=1;
                      paddleWidth+=4;
                      speedup2=1;
                   }
@@ -132,13 +133,13 @@ function collisionDetection(){
                   Increase the speed of ball ******/
                   if(count<=20 && speedup3==0){
                      if(dy<0)
-                       dy-=0.5;
+                       dy-=1;
                      else
-                       dy+=0.5;
+                       dy+=1;
                      if(dx<0)
-                       dx-=0.5;
+                       dx-=1;
                      else
-                       dx+=0.5;
+                       dx+=1;
 
                      paddleWidth+=4;
                      speedup3=1;
@@ -147,13 +148,13 @@ function collisionDetection(){
                   if(count<=15 && speedup4==0){
 
                     if(dy<0)
-                      dy-=0.5;
+                      dy-=1;
                     else
-                      dy+=0.5;
+                      dy+=1;
                     if(dx<0)
-                      dx-=0.5;
+                      dx-=1;
                     else
-                      dx+=0.5;
+                      dx+=1;
                      paddleWidth+=5;
                      speedup4=1;
 
@@ -162,13 +163,13 @@ function collisionDetection(){
                   if(count<=10 && speedup5==0){
 
                      if(dy<0)
-                       dy-=0.5;
+                       dy-=1;
                      else
-                      dy+=0.5;
+                      dy+=1;
                      if(dx<0)
-                       dx-=0.5;
+                       dx-=1;
                      else
-                      dx+=0.5;
+                      dx+=1;
                      paddleWidth+=6;
                      speedup5=1;
 
@@ -177,13 +178,13 @@ function collisionDetection(){
                   if(count<=5 && speedup6==0){
 
                     if(dy<0)
-                      dy-=0.5;
+                      dy-=1;
                     else
-                      dy+=0.5;
+                      dy+=1;
                     if(dx<0)
-                      dx-=0.5;
+                      dx-=1;
                     else
-                      dx+=0.5;
+                      dx+=1;
                      paddleWidth+=6;
                      speedup6=1;
 
@@ -192,13 +193,13 @@ function collisionDetection(){
                   if(count<=5 && speedup7==0){
 
                     if(dy<0)
-                      dy-=0.5;
+                      dy-=1;
                     else
-                      dy+=0.5;
+                      dy+=1;
                     if(dx<0)
-                      dx-=0.5;
+                      dx-=1;
                     else
-                      dx+=0.5;
+                      dx+=1;
                      paddleWidth+=6;
                      speedup7=1;
 
@@ -209,8 +210,6 @@ function collisionDetection(){
                      alert("You are awesome!!");
                      document.location.reload();
                   }
-
-
           }
 
       }
@@ -226,8 +225,14 @@ function drawScore(){
    ctx.font="16px Arial";
    ctx.fillStyle="#0095DD";
    ctx.fillText("Score: "+score,8,20);
-   console.log(parseInt(brickRowCount)*parseInt(brickColumnCount)-parseInt(count));
+//   console.log(parseInt(brickRowCount)*parseInt(brickColumnCount)-parseInt(count));
 
+}
+
+function drawLives() {
+    ctx.font = "16px Arial";
+    ctx.fillStyle = "#0095DD";
+    ctx.fillText("Lives: "+lives, canvas.width-65, 20);
 }
 
 function draw(){
@@ -237,6 +242,7 @@ function draw(){
     drawBall();
     drawPaddle();
     drawScore();
+    drawLives();
 
     collisionDetection();
 
@@ -248,9 +254,18 @@ function draw(){
        if(x>paddleX && x<paddleX+paddleWidth)
           dy=-dy;
        else{
-          alert("Game Over! You lost");
-          document.location.reload();
-       }
+          lives--;
+          if(!lives) {
+            alert("GAME OVER");
+            document.location.reload();
+          }
+          else{
+            x=canvas.width/2;
+            y = canvas.height-30;
+            paddleWidth=75;
+            paddleX = (canvas.width-paddleWidth)/2;
+           }
+      }
 
 
     }
@@ -266,6 +281,8 @@ function draw(){
        paddleX+=7;
     else if(leftPressed && paddleX>0)
        paddleX-=7;
+
+    requestAnimationFrame(draw);
 
 }
 
@@ -306,7 +323,4 @@ document.addEventListener("keyup",keyUpHandler,false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
 
-
-
-
-setInterval(draw,10);  // Run this every 10 millisecond
+draw();
