@@ -38,8 +38,19 @@ function draw(){
     drawBall();
     drawPaddle();
 
-    if(y+dy<ballRadius || y+dy>canvas.height-ballRadius)
+    if(y+dy<ballRadius)
       dy=-dy;
+    else if(y+dy>canvas.height-ballRadius){
+
+       if(x>paddleX && x<paddleX+paddleWidth)
+          dy=-dy;
+       else{
+          alert("Game Over");
+          document.location.reload();
+       }
+
+
+    }
     else
       y+=dy;
 
