@@ -1,4 +1,6 @@
 # Brick-Buster-JS
-A DX-Ball type breakout game built using javaScript.
+An experimental DX-Ball type breakout game built using JavaScript and HTML5.
 
-I am building this game just to learn how to make games. This is not a new idea.
+## Features to be added
+
+  - Sounds on game over, winning.
