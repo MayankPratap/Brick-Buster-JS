@@ -101,6 +101,8 @@ function collisionDetection(){
        if(b.status==1){
 
           if(x>b.x && x<b.x+brickWidth && y>b.y && y<b.y+brickHeight){
+             var snd=new Audio("./music/paddleBall.wav");
+             snd.play();
              dy=-dy;
              b.status=0;
              score++;
@@ -253,8 +255,13 @@ function draw(){
       dy=-dy;
     else if(y+dy>canvas.height-ballRadius){
 
-       if(x>=paddleX && x<=paddleX+paddleWidth)
+       if(x>=paddleX && x<=paddleX+paddleWidth){
+
+          var snd=new Audio("./music/paddleBall.wav");
+          snd.play();
           dy=-dy;
+
+       }
        else{
           lives--;
           if(!lives) {
