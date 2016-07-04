@@ -9,7 +9,7 @@ var paddleX=(canvas.width-paddleWidth)/2;
 var rightPressed=false;  // Whether right control button is pressed
 var leftPressed=false;  // Whether left control button is pressed
 var ballRadius=10;
-var brickRowCount=7;
+var brickRowCount=9;
 var brickColumnCount=5;
 
 var count=brickRowCount*brickColumnCount;
@@ -20,7 +20,7 @@ var lives = 3;  // How many lives player has to complete the game
 
 var brickWidth=80;
 var brickHeight=20;
-var brickPadding=10;
+var brickPadding=7;
 var brickOffsetTop=30;
 var brickOffsetLeft=40;
 var speedup1=0;
@@ -33,15 +33,10 @@ var speedup7=0;
 
 var bricks=[];
 for(c=0;c<brickColumnCount;++c){
-
   bricks[c]=[];
-
   for(r=0;r<brickRowCount;++r){
-
     bricks[c][r]={x:0,y:0,status:1};
-
   }
-
 
 }
 
@@ -81,7 +76,10 @@ function drawBricks(){
          bricks[c][r].y=brickY;
          ctx.beginPath();
          ctx.rect(brickX,brickY,brickWidth,brickHeight);
-         ctx.fillStyle="#0095DD";
+         if((c+r)%2==0)
+           ctx.fillStyle="#EA80B0";
+         else
+           ctx.fillStyle="#FFA500";
          ctx.fill();
          ctx.closePath();
 
@@ -267,7 +265,7 @@ function draw(){
           if(!lives) {
             alert("GAME OVER!!");
             document.location.reload();
-        
+
           }
           else{
             x=canvas.width/2;
@@ -293,7 +291,7 @@ function draw(){
     else if(leftPressed && paddleX>0)
        paddleX-=7;
 
-    requestAnimationFrame(draw);
+
 
 }
 
@@ -335,4 +333,4 @@ document.addEventListener("keyup",keyUpHandler,false);
 document.addEventListener("mousemove", mouseMoveHandler, false);
 
 
-draw();
+setInterval(draw,20);
