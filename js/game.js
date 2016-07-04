@@ -12,7 +12,7 @@ var ballRadius=10;
 var brickRowCount=7;
 var brickColumnCount=5;
 
-var count=parseInt(brickRowCount)*parseInt(brickColumnCount);
+var count=brickRowCount*brickColumnCount;
 var rem=count;
 
 var score = 0;
@@ -271,9 +271,9 @@ function draw(){
           else{
             x=canvas.width/2;
             y = canvas.height-30;
-            paddleWidth=85;
+            paddleWidth=80;
             rem=count;
-            paddleX = (canvas.width-paddleWidth)/2;
+            paddleX=(canvas.width-paddleWidth)/2;
            }
       }
 
@@ -321,7 +321,8 @@ function mouseMoveHandler(e){
 
   if(relativeX>0 && relativeX<canvas.width){
 
-    paddleX=relativeX-paddleWidth/2;
+     if((relativeX-paddleWidth/2>=0) && (relativeX-paddleWidth/2<=(canvas.width-paddleWidth)))
+        paddleX=relativeX-paddleWidth/2;
 
   }
 
