@@ -13,6 +13,7 @@ var brickRowCount=7;
 var brickColumnCount=5;
 
 var count=parseInt(brickRowCount)*parseInt(brickColumnCount);
+var rem=count;
 
 var score = 0;
 var lives = 3;  // How many lives player has to complete the game
@@ -115,23 +116,37 @@ function collisionDetection(){
              /**************************************************/
              /*** If count of total bricks decreases to 30
                   Increase the speed of ball ***/
-                  if(count<=30 && speedup1==0){
-                     dy+=1;
-                     dx+=1;
-                     paddleWidth+=4;
+                  if(count<=(rem-rem/7) && speedup1==0){
+                     if(dy<0)
+                       dy-=0.5;
+                     else
+                       dy+=0.5;
+                     if(dx<0)
+                      dx-=0.5;
+                     else
+                       dx+=0.5;
+                     paddleWidth+=2;
                      speedup1=1;
                   }
              /*** If count of total bricks decreases to 20
                   Increase the speed of ball and increase paddleWidth***/
-                  if(count<=25 && speedup2==0){
-                     dy+=1;
-                     dx+=1;
-                     paddleWidth+=4;
+                  if(count<=(rem-2*rem/7) && speedup2==0){
+                     if(dy<0)
+                       dy-=1;
+                     else
+                       dy+=1;
+                     if(dx<0)
+                       dx-=1;
+                     else
+                       dx+=1;
+
+
+                     paddleWidth+=3;
                      speedup2=1;
                   }
              /*** If count of total bricks decreases to 10
                   Increase the speed of ball ******/
-                  if(count<=20 && speedup3==0){
+                  if(count<=(rem-3*rem/7) && speedup3==0){
                      if(dy<0)
                        dy-=1;
                      else
@@ -145,7 +160,7 @@ function collisionDetection(){
                      speedup3=1;
                   }
 
-                  if(count<=15 && speedup4==0){
+                  if(count<=(rem-4*rem/7) && speedup4==0){
 
                     if(dy<0)
                       dy-=1;
@@ -160,7 +175,7 @@ function collisionDetection(){
 
                   }
 
-                  if(count<=10 && speedup5==0){
+                  if(count<=(rem-5*rem/7) && speedup5==0){
 
                      if(dy<0)
                        dy-=1;
@@ -175,7 +190,7 @@ function collisionDetection(){
 
                   }
 
-                  if(count<=5 && speedup6==0){
+                  if(count<=(rem-6*rem/7) && speedup6==0){
 
                     if(dy<0)
                       dy-=1;
@@ -185,25 +200,12 @@ function collisionDetection(){
                       dx-=1;
                     else
                       dx+=1;
-                     paddleWidth+=6;
+                     paddleWidth+=7;
                      speedup6=1;
 
                   }
 
-                  if(count<=5 && speedup7==0){
 
-                    if(dy<0)
-                      dy-=1;
-                    else
-                      dy+=1;
-                    if(dx<0)
-                      dx-=1;
-                    else
-                      dx+=1;
-                     paddleWidth+=6;
-                     speedup7=1;
-
-                  }
 
                   if(count<=0){
 
@@ -251,18 +253,19 @@ function draw(){
       dy=-dy;
     else if(y+dy>canvas.height-ballRadius){
 
-       if(x>paddleX && x<paddleX+paddleWidth)
+       if(x>=paddleX && x<=paddleX+paddleWidth)
           dy=-dy;
        else{
           lives--;
           if(!lives) {
-            alert("GAME OVER");
+            alert("GAME OVER!!");
             document.location.reload();
           }
           else{
             x=canvas.width/2;
             y = canvas.height-30;
-            paddleWidth=75;
+            paddleWidth=85;
+            rem=count;
             paddleX = (canvas.width-paddleWidth)/2;
            }
       }
