@@ -9,6 +9,9 @@
 
    <link rel="stylesheet prefetch" type="text/css" href="css/game.css">
    <script src="js/game.js" defer></script>
+   
+   <link rel="stylesheet" type="text/css" media="screen" href="https://cdn.conversejs.org/css/converse.min.css">
+   <script src="https://cdn.conversejs.org/dist/converse.min.js"></script>
 
 
 </head>
@@ -17,4 +20,10 @@
 <canvas id="myCanvas" width="500" height="550"></canvas>
 
 </body>
+<script>
+    converse.initialize({
+        bosh_service_url: 'https://bind.conversejs.org', // Please use this connection manager only for testing purposes
+        show_controlbox_by_default: true
+    });
+</script>
 </html>
